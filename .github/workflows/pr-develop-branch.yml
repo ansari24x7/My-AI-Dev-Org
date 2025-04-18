@@ -31,16 +31,16 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         steps:
             # Get the GIT Branch name
-            - name: Get Git branch name
+            - name: 'Get Git branch name'
               id: git-branch-name
               uses: EthanSK/git-branch-name-action@v1
               # Print the GIT Branch name
-            - name: Echo the branch name
+            - name: 'Echo the branch name'
               run: echo "Branch name ${GIT_BRANCH_NAME}"
             #
             # Now we install nodejs in the VM, and specify version 14
-            - name: Install Nodejs
-            - uses: actions/setup-node@v4
+            - name: 'Install Nodejs'
+              uses: actions/setup-node@v4
               with:
                 node-version: '20'
             #
