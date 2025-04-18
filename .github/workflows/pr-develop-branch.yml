@@ -22,13 +22,6 @@ on:
 # Jobs to be executed when the above conditions are met
 jobs:
     validate-deployment-on-develop-org:
-      # print_github_branch:
-      steps:
-        - name: Get Git branch name
-          id: git-branch-name
-          uses: EthanSK/git-branch-name-action@v1
-        - name: Echo the branch name
-          run: echo "Branch name ${GIT_BRANCH_NAME}"
         #  
         # As mentioned in the blog post, this job runs inside a VM. Here we
         # can specify which OS this VM should run on. 
@@ -37,6 +30,14 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.actor != 'dependabot[bot]' }}
         steps:
+            # Get the GIT Branch name
+            - name: Get Git branch name
+              id: git-branch-name
+              uses: EthanSK/git-branch-name-action@v1
+              # Print the GIT Branch name
+            - name: Echo the branch name
+              run: echo "Branch name ${GIT_BRANCH_NAME}"
+            #
             # Now we install nodejs in the VM, and specify version 14
             - uses: actions/setup-node@v4
               with:
