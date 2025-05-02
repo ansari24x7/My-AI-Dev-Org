@@ -6,7 +6,7 @@ public with sharing class AgentforceHomepageController {
     }
 
     private static String getBannerUrlFromName(String docName) {
-        system.debug('Inside method 3');
+        system.debug('Inside method 4');
         try {
            Document doc = [SELECT Id FROM Document where Name = :docName LIMIT 1];  
                     System.debug('file URL: ' + '/servlet/servlet.ImageServer?id=' + doc.Id + '&oid=' + UserInfo.getOrganizationId() );
