@@ -2,28 +2,11 @@
 name: Deploy to development Org
 
 # Definition when the workflow should run
-# on:
-#     push:
-#       branches: [ integration ]
-#       paths:
-#         - 'force-app/**'
-
-# Definition when the workflow should run
 on:
-  # The workflow will run whenever an event happens on a pull request
-  pull_request:
-    # The events are that a PR is opened, or when a commit is pushed
-    # to a branch that has an existing pull request
-    types: [merged]
-    # The branches filter allows to specify that this workflow should only
-    # run if the branch name is "development". This way we prevent this workflow
-    # from running when PRs are opened on other branches
-    branches: [ development]
-    # We only care about changes to the force-app directory, which is the
-    # root directory of the sfdx project. This prevents the job from running
-    # when changing non-salesforce files (like this yml file).
-    paths:
-      - 'force-app/**'
+    push:
+      branches: [ development ]
+      paths:
+        - 'force-app/**'
             
 
 # Jobs to be executed
@@ -58,7 +41,6 @@ jobs:
               shell: bash
               run: |
                   echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
-                  echo ${{ secrets.SFDX_STAGING_URL}} > ./SFDX_STAGING_URL.txt
 
             - name: 'Create delta packages for new, modified or deleted metadata'
               run: | 
@@ -76,11 +58,11 @@ jobs:
               run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
 
             # Authenticate to org
-            - name: 'Authenticate to Staging Org to Staging org'
-              run: sfdx auth:sfdxurl:store -f ./SFDX_STAGING_URL.txt -s -a staging
+            #- name: 'Authenticate to Staging Org to Staging org'
+            #  run: sfdx auth:sfdxurl:store -f ./SFDX_STAGING_URL.txt -s -a staging
 
-            - name: 'Deploy the entire branch'
-              run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
+            #- name: 'Deploy the entire branch'
+            #  run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
 
-            - name: 'Deploy destructive changes (if any) to Staging org'
-              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
+            #- name: 'Deploy destructive changes (if any) to Staging org'
+            #  run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
