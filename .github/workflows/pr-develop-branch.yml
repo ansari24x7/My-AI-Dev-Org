@@ -1,5 +1,5 @@
 # Unique name for this workflow
-name: Validate PR on development branch
+name: Validate PR when raised on development as target branch
 
 # Definition when the workflow should run
 on:

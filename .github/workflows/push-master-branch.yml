@@ -37,7 +37,7 @@ jobs:
                 fetch-depth: 0
 
             # Store secret for production org
-            - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
+            - name: 'Populate auth file with SFDX_URL secret of the Production orgs'
               shell: bash
               run: |
                   echo ${{ secrets.SFDX_PRODUCTION_URL}} > ./SFDX_PRODUCTION_URL.txt
